@@ -25,57 +25,45 @@ package.check <- lapply(
 
 library(shiny)
 
-# Define UI for app that draws a histogram ----
+# Define UI ----
 ui <- fluidPage(
-  
-  # App title ----
-  titlePanel("Hello World!"),
-  
-  # Sidebar layout with input and output definitions ----
+  titlePanel("My Shiny App"),
   sidebarLayout(
-    
-    # Sidebar panel for inputs ----
     sidebarPanel(
-      
-      # Input: Slider for the number of bins ----
-      sliderInput(inputId = "bins",
-                  label = "Number of bins:",
-                  min = 5,
-                  max = 50,
-                  value = 30)
-      
+      h2("Installation"),
+      p("Shiny is available on CRAN, so you can install it in the usual way from your R console:"),
+      code('install.packages("shiny")'),
+      br(),
+      br(),
+      br(),
+      br(),
+      img(src = "rstudio.png", height = 70, width = 200),
+      br(),
+      "Shiny is a product of ", 
+      span("RStudio", style = "color:blue")
     ),
-    
-    # Main panel for displaying outputs ----
     mainPanel(
-      
-      # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
-      
+      h1("Introducing Shiny"),
+      p("Shiny is a new package from RStudio that makes it ", 
+        em("incredibly easy "), 
+        "to build interactive web applications with R."),
+      br(),
+      p("For an introduction and live examples, visit the ",
+        a("Shiny homepage.", 
+          href = "http://shiny.rstudio.com")),
+      br(),
+      h2("Features"),
+      p("- Build useful web applications with only a few lines of code—no JavaScript required."),
+      p("- Shiny applications are automatically 'live' in the same way that ", 
+        strong("spreadsheets"),
+        " are live. Outputs change instantly as users modify inputs, without requiring a reload of the browser.")
     )
   )
 )
-# Define server logic required to draw a histogram ----
+# Define server logic ----
 server <- function(input, output) {
   
-  # Histogram of the Old Faithful Geyser Data ----
-  # with requested number of bins
-  # This expression that generates a histogram is wrapped in a call
-  # to renderPlot to indicate that:
-  #
-  # 1. It is "reactive" and therefore should be automatically
-  #    re-executed when inputs (input$bins) change
-  # 2. Its output type is a plot
-  output$distPlot <- renderPlot({
-    
-    x    <- faithful$waiting
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    hist(x, breaks = bins, col = "#75AADB", border = "orange",
-         xlab = "Waiting time to next eruption (in mins)",
-         main = "Histogram of waiting times")
-    
-  })
 }
+
 # Run the app ----
 shinyApp(ui = ui, server = server)
